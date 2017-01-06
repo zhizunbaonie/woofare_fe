@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="微行大数据管理系统">
+  <meta name="keywords" content="微行,大数据管理系统,航班,汇率,航段">
+  <link href="css/ui.min.css" rel="stylesheet" type="text/css">
+  <link href="css/commen.css" rel="stylesheet" type="text/css">
+  <link href="fonts/iconfont.css" rel="stylesheet" type="text/css">
+  <link href="css/skin.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <link href="css/cityquery.css" rel="stylesheet" type="text/css">
+  <link href="css/InterFlightModel.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="js/jquery/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js/modal.js"></script>
+  <script type="text/javascript" src="js/top_nav.js"></script>
+  <title>微行大数据管理系统</title>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <header class="Hui-header cl">
+      <a class="Hui-logo l" title="微行大数据管理系统" href="/">微行大数据管理系统</a> <a class="Hui-logo-m l" href="/" title="微行大数据管理系统"></a><span class="微行大数据管理系统"></span>
+      <div class="top_nav_box">
+        <button type="button" class="top_nav_btn">
+          <span class="nav_line"></span><span class="nav_line"></span><span class="nav_line"></span>
+        </button>
+        <div id="top_nav_show" style="display:none;">
+            <ul class="top_menu">
+                <li><a href="#">航班查询</a></li>
+                <li><a href="#">汇率管理</a></li>
+                <li><a href="#">航段管理</a></li>
+                <li><a href="#">爬虫任务管理</a></li>
+            </ul>
+        </div>
+      </div>
+      <ul class="Hui-userbar">
+          <li>超级管理员</li>
+          <li class="dropDown"><a href="javascript:void(0);" class="dropDown_A"><span id="LoginName">demo3</span><i class="Hui-iconfont"></i></a>
+              <ul class="dropDown-menu radius box-shadow">
+                  <li style="display: none;"><a href="javascript:void(0);">个人信息</a></li>
+                  <li><a href="javascript:void(0);" id="btnUpdatePsd">修改密码</a></li>
+                  <li><a href="/ExitSys.aspx">退出</a></li>
+              </ul>
+          </li>
+      </ul>
+  </header>
+  <aside class="Hui-aside">
+    <div class="menu_dropdown bk_2">
+      <dl id="SMenu_M_FX_01_01" style="" class="TempList">
+          <dt id="SMenudt" class="selected">
+            <i class="Hui-iconfont" id="SMenusi"></i> <a id="SMenus" href="javascript:void(0)">实时数据分析</a><i class="Hui-iconfont menu_dropdown-arrow" id="SMenuei"></i>
+          </dt>
+          <dd id="TMenudd" style="display: block;">
+              <ul id="TMenuul">
+                  <li><a href="#" href="javascript:void(0)">航班查询</a></li>
+                  <li><a href="#" href="javascript:void(0)">汇率管理</a></li>
+                  <li><a href="#" href="javascript:void(0)">航段管理</a></li>
+                  <li><a href="#" href="javascript:void(0)">爬虫任务管理</a></li>
+              </ul>
+          </dd>
+      </dl>
+    </div>
+  </aside>
+  <div class="dislpayArrow">
+      <a class="pngfix" href="javascript:void(0);" onclick="displaynavbar(this)"></a>
+  </div>
+  <section class="Hui-article-box">
+    <div id="iframe_box" class="Hui-article">
+      <form method="post" action="OTAFareAnalysis.aspx" id="form1">
+        <nav class="breadcrumb">
+          <i class="Hui-iconfont"></i> 首页
+          <span class="c-gray en">&gt;</span> 实时数据分析
+          <span class="c-gray en">&gt;</span>汇率管理
+        </nav>
+        <div class="pd-20">
+          <div class="pd-5 clearfix">
+            <a href="#" type="button" class="btn btn-success flaot_r">添加 + </a>
+          </div>
+          <div class="mt-5">
+            <table class="table table-border table-bordered table-bg table-hover table-sort" id="table_OrderList">
+              <thead>
+                <tr class="text-c">
+                  <th align="center">名称</th>
+                  <th align="center">代码</th>
+                  <th align="center">Vate</th>
+                  <th align="center" width="200">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-c">
+                  <td>美元</td>
+                  <td>USD</td>
+                  <td>487.6500</td>
+                  <td>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">删除</button>
+                    <button type="button" class="btn btn-secondary">修改</button>
+                  </td>
+                </tr>
+                <tr class="text-c">
+                  <td>美元</td>
+                  <td>USD</td>
+                  <td>487.6500</td>
+                  <td>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">删除</button>
+                    <button type="button" class="btn btn-secondary">修改</button>
+                  </td>
+                </tr>
+                <tr class="text-c">
+                  <td>美元</td>
+                  <td>USD</td>
+                  <td>487.6500</td>
+                  <td>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">删除</button>
+                    <button type="button" class="btn btn-secondary">修改</button>
+                  </td>
+                </tr>
+                <tr class="text-c">
+                  <td>美元</td>
+                  <td>USD</td>
+                  <td>487.6500</td>
+                  <td>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">删除</button>
+                    <button type="button" class="btn btn-secondary">修改</button>
+                  </td>
+                </tr>
+                <tr class="text-c">
+                  <td>美元</td>
+                  <td>USD</td>
+                  <td>487.6500</td>
+                  <td>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">删除</button>
+                    <button type="button" class="btn btn-secondary">修改</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div id="Pagination" class="msdn"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">删除提示</h4>
+            </div>
+            <div class="modal-body">您确认要删除此项吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">确认</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+  $('#myModal').modal("hide");
+</script>
+  <script type="text/javascript" src="js/select_pop.js"></script>
+  <script type="text/javascript" src="js/left_menu.js"></script>
+  <script type="text/javascript" src="js/left_fold.js"></script>
+  <script type="text/javascript" src="js/priceline.js"></script>
+  <script type="text/javascript" src="js/jquery.linq.min.js"></script>
+</body>
+</html>

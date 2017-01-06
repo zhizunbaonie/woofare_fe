@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="微行大数据管理系统">
+  <meta name="keywords" content="微行,大数据管理系统,航班,汇率,航段">
+  <link href="css/ui.min.css" rel="stylesheet" type="text/css">
+  <link href="css/commen.css" rel="stylesheet" type="text/css">
+  <link href="fonts/iconfont.css" rel="stylesheet" type="text/css">
+  <link href="css/skin.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <link href="css/cityquery.css" rel="stylesheet" type="text/css">
+  <link href="css/InterFlightModel.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="js/jquery/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js/modal.js"></script>
+
+  <script type="text/javascript" src="js/select_box.js"></script>
+  <title>微行大数据管理系统</title>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <header class="Hui-header cl">
+      <a class="Hui-logo l" title="微行大数据管理系统" href="/">微行大数据管理系统</a> <a class="Hui-logo-m l" href="/" title="微行大数据管理系统"></a><span class="微行大数据管理系统"></span>
+  </header>
+  <aside class="Hui-aside">
+    <div class="menu_dropdown bk_2">
+      <dl id="SMenu_M_FX_01_01" style="" class="TempList">
+          <dt id="SMenudt" class="selected">
+            <i class="Hui-iconfont" id="SMenusi"></i> <a id="SMenus" href="javascript:void(0)">实时数据分析</a><i class="Hui-iconfont menu_dropdown-arrow" id="SMenuei"></i>
+          </dt>
+          <dd id="TMenudd" style="display: block;">
+              <ul id="TMenuul">
+                  <li><a href="#" href="javascript:void(0)">航班查询</a></li>
+                  <li><a href="#" href="javascript:void(0)">汇率管理</a></li>
+                  <li><a href="#" href="javascript:void(0)">航段管理</a></li>
+                  <li><a href="#" href="javascript:void(0)">爬虫任务管理</a></li>
+              </ul>
+          </dd>
+      </dl>
+    </div>
+  </aside>
+  <div class="dislpayArrow">
+      <a class="pngfix" href="javascript:void(0);" onclick="displaynavbar(this)"></a>
+  </div>
+  <section class="Hui-article-box">
+    <div id="iframe_box" class="Hui-article">
+      <form method="post" id="form1">
+        <nav class="breadcrumb">
+          <i class="Hui-iconfont"></i> 首页
+          <span class="c-gray en">&gt;</span> 实时数据分析
+          <span class="c-gray en">&gt;</span>任务航段添加
+        </nav>
+        <div class="pd-20">
+          <div class="mt-5">
+            <div class="form_li clearfix">
+              <ul class="clearfix">
+                <li class="left_txt">航空公司：</li>
+                <li class="left_txt" style="width:260px;">
+                  <span class="select-box inline">
+                    <select id="air" class="select" style="width: 208px; margin-top:0px; vertical-align:top;">
+                      <option value="Y">南方航空公司</option>
+                      <option value="C">中国国际航空公司</option>
+                      <option value="F">海南航空公司</option>
+                      <option value="F">东方航空公司</option>
+                    </select>
+                  </span>
+                </li>
+                <li class="left_txt"><input type="checkbox" id="grab" name="ifGrab" /><label for="grab">抓取航段</label></li>
+              </ul>
+              <ul class="clearfix">
+
+              </ul>
+              <div class="checked_after">
+                <ul class="clearfix">
+                  <li class="left_txt">并发：</li>
+                  <li class="right_inp"><input type="text" class="input-text" /></li>
+                </ul>
+                <ul class="clearfix">
+                  <li class="left_txt">间隔：</li>
+                  <li class="right_inp"><input type="text" class="input-text" /><div class="timebox">小时</div></li>
+                </ul>
+                <ul class="clearfix">
+                  <li class="left_txt">天数：</li>
+                  <li class="right_inp"><input type="text" class="input-text" /></li>
+                </ul>
+                <ul class="clearfix huilv">
+                  <li class="left_txt">天数：</li>
+                  <li class="right_inp"><input type="text" class="input-text" /><span name="check" id="check" class="btn btn-gray" style="margin-left:-3px;">查询实时汇率</span></li>
+                </ul>
+                <ul class="clearfix">
+                  <li class="right_inp">
+                    <!-- begin -->
+                    <div class="member_opreat clearfix">
+                      <div class="mem_group belong">
+                        <h5>请添加抓取航段列表</h5>
+                        <select name="left" size="10" id="select_left" multiple>
+                           <option value="aaaaa">aaaaa</option>
+                           <option value="bbbbb">bbbbb</option>
+                           <option value="ccccc">ccccc</option>
+                        </select>
+                      </div>
+                      <div class="arr">
+                        <div class="ico">
+                          <button type="button" class="btn size-MINI" onClick="moveSelected(document.all.left,document.all.right)">添加>></button><br/>
+                          <button type="button" class="btn size-MINI" onClick="moveSelected(document.all.right,document.all.left)"><<删除</button>
+                        </div>
+                      </div>
+                      <div class="mem_group alternative">
+                        <h5>已添加抓取航段列表</h5>
+                        <select name="right" size="10" id="select_right" multiple>
+                           <option value="ddddd">ddddd</option>
+                           <option value="eeeee">eeeee</option>
+                           <option value="fffff">fffff</option>
+                           <option value="ggggg">ggggg</option>
+                           <option value="hhhhh">hhhhh</option>
+                           <option value="iiiii">iiiii</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- end -->
+                  </li>
+                </ul>
+                <ul class="clearfix sub_box">
+                  <li><button type="submit" class="btn size-L btn-success" />提交设置</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">删除提示</h4>
+            </div>
+            <div class="modal-body">您确认要删除此项吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">确认</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+  $('#myModal').modal("hide");
+</script>
+<script type="application/javascript">
+  $(document).ready(function(){
+    //未选中不可编辑
+    $('.input-text').attr("disabled",true);
+    $('.checked_after').hide();
+    $('#grab').click(function(){
+      if(this.checked){
+        $('.input-text').attr("disabled",false);
+        $('.checked_after').show();
+      }else{
+        $('.input-text').attr("disabled",true);
+        $('.checked_after').hide();
+      }
+    });
+  });
+</script>
+  <script type="text/javascript" src="js/select_pop.js"></script>
+  <script type="text/javascript" src="js/left_menu.js"></script>
+  <script type="text/javascript" src="js/left_fold.js"></script>
+  <script type="text/javascript" src="js/priceline.js"></script>
+  <script type="text/javascript" src="js/jquery.linq.min.js"></script>
+</body>
+</html>

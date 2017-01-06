@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="微行大数据管理系统">
+  <meta name="keywords" content="微行,大数据管理系统,航班,汇率,航段">
+  <link href="css/ui.min.css" rel="stylesheet" type="text/css">
+  <link href="css/commen.css" rel="stylesheet" type="text/css">
+  <link href="fonts/iconfont.css" rel="stylesheet" type="text/css">
+  <link href="css/skin.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <link href="css/cityquery.css" rel="stylesheet" type="text/css">
+  <link href="css/InterFlightModel.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="js/jquery/jquery-1.7.2.min.js"></script>
+  <title>微行大数据管理系统</title>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <header class="Hui-header cl">
+      <a class="Hui-logo l" title="微行大数据管理系统" href="/">微行大数据管理系统</a> <a class="Hui-logo-m l" href="/" title="微行大数据管理系统"></a><span class="微行大数据管理系统"></span>
+      <ul class="Hui-userbar">
+          <li>超级管理员</li>
+          <li class="dropDown"><a href="javascript:void(0);" class="dropDown_A"><span id="LoginName">demo3</span><i class="Hui-iconfont"></i></a>
+              <ul class="dropDown-menu radius box-shadow">
+                  <li style="display: none;"><a href="javascript:void(0);">个人信息</a></li>
+                  <li><a href="javascript:void(0);" id="btnUpdatePsd">修改密码</a></li>
+                  <li><a href="/ExitSys.aspx">退出</a></li>
+              </ul>
+          </li>
+      </ul>
+  </header>
+  <aside class="Hui-aside">
+    <div class="menu_dropdown bk_2">
+      <dl id="SMenu_M_FX_01_01" style="" class="TempList">
+          <dt id="SMenudt" class="selected">
+            <i class="Hui-iconfont" id="SMenusi"></i> <a id="SMenus" href="javascript:void(0)">实时数据分析</a><i class="Hui-iconfont menu_dropdown-arrow" id="SMenuei"></i>
+          </dt>
+          <dd id="TMenudd" style="display: block;">
+              <ul id="TMenuul">
+                  <li><a href="#" href="javascript:void(0)">航班查询</a></li>
+                  <li><a href="#" href="javascript:void(0)">汇率管理</a></li>
+                  <li><a href="#" href="javascript:void(0)">航段管理</a></li>
+                  <li><a href="#" href="javascript:void(0)">爬虫任务管理</a></li>
+              </ul>
+          </dd>
+      </dl>
+      <dl id="SMenu_M_FX_02_02" style="" class="TempList">
+          <dt id="SMenudt">
+            <i class="Hui-iconfont" id="SMenusi"></i> <a id="SMenus" href="javascript:void(0)">实时数据分析</a><i class="Hui-iconfont menu_dropdown-arrow" id="SMenuei"></i>
+          </dt>
+          <dd id="TMenudd">
+              <ul id="TMenuul">
+                  <li><a href="#" href="javascript:void(0)">航班查询</a></li>
+                  <li><a href="#" href="javascript:void(0)">汇率管理</a></li>
+                  <li><a href="#" href="javascript:void(0)">航段管理</a></li>
+                  <li><a href="#" href="javascript:void(0)">爬虫任务管理</a></li>
+              </ul>
+          </dd>
+      </dl>
+    </div>
+  </aside>
+  <div class="dislpayArrow">
+      <a class="pngfix" href="javascript:void(0);" onclick="displaynavbar(this)"></a>
+  </div>
+  <section class="Hui-article-box">
+    <div id="iframe_box" class="Hui-article">
+      <form method="post" action="OTAFareAnalysis.aspx" id="form1">
+        <nav class="breadcrumb">
+          <i class="Hui-iconfont"></i> 首页
+          <span class="c-gray en">&gt;</span> 实时数据分析
+          <span class="c-gray en">&gt;</span>航班查询
+        </nav>
+        <div class="pd-20 search_flight_box">
+          <div class="pd-5">
+            <span class="inquiry_li padding_l0">
+              <span class="select-box inline">
+                <select id="slt_FlightTrip" class="select" style="width: 100%;">
+                  <option value="OW">单程</option>
+                  <option value="RT">往返</option>
+                </select>
+              </span>
+            </span>
+            <span class="inquiry_li">
+              出发城市： <input type="text" id="txtDepartCity" name="txtDepartCity" style="color: rgb(0, 0, 0);" class="input-text" oninput="OnInput (event)" onpropertychange="OnPropChanged (event)">
+            </span>
+            <span class="inquiry_li">
+              到达城市： <input type="text" id="txtDestCity" name="txtDestCity" style="color: rgb(0, 0, 0);" class="input-text" autocomplete="off">
+            </span>
+            <span class="inquiry_li">
+              出发日期：
+              <input type="text" id="txtDeptureDate" name="txtDeptureDate" class="input-text" value="2016-12-18">
+            </span>
+            <span class="inquiry_li">
+              返程日期：
+              <input type="text" id="txtArriveDate" name="txtArriveDate" style="color: rgb(204, 204, 204);" class="input-text">
+            </span>
+            <span class="inquiry_li  padding_l0">
+              <span name="btnSearch" id="btnSearch" class="btn btn-success radius  ml-10"><i class="Hui-iconfont"></i> 查询</span>
+            </span>
+          </div>
+          <div class="pd-5 pad_l60">
+            <span class="inquiry_li">
+              <span>舱位等级：</span>
+              <span class="select-box inline">
+                <select id="slt_CabinCode" class="select">
+                  <option value="Y">经济舱</option>
+                  <option value="C">公务舱</option>
+                  <option value="F">头等舱</option>
+                </select>
+              </span>
+            </span>
+            <span class="inquiry_li">
+              <div class="g-down">
+                <div class="target">数据来源 <i class="g-ico g-ico-soliddrop"></i></div>
+                <div class="list">
+                  <ul class="airline tempclass" id="ul_FlightCarrier0">
+                    <li id="li_FlightCarrier0" style="" carriercode="HO">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="HO"><span id="sp_TCarrierName">吉祥航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier1" style="" carriercode="HX">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="HX"><span id="sp_TCarrierName">香港航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier2" style="" carriercode="FM">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="FM"><span id="sp_TCarrierName">上海航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier3" style="" carriercode="MF">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="MF"><span id="sp_TCarrierName">厦门航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier4" style="" carriercode="MU">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="MU"><span id="sp_TCarrierName">东方航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier5" style="" carriercode="KA">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="KA"><span id="sp_TCarrierName">港龙航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier6" style="" carriercode="CX">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="CX"><span id="sp_TCarrierName">国泰航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier7" style="" carriercode="9C">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="9C"><span id="sp_TCarrierName">春秋航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </span>
+          </div>
+          <div class="mt-5">
+            <table class="table table-border table-bordered table-bg table-hover table-sort search_flight_table" id="table_OrderList">
+              <thead>
+                <tr class="text-c">
+                  <th align="center" style="width: 60px;">航班</th>
+                  <th align="center" style="width: 120px;">来源</th>
+                  <th align="center">出发日期</th>
+                  <th align="center">直飞/中转</th>
+                  <th align="center">航司代码</th>
+                  <th align="center">舱位等级</th>
+                  <th align="center">人民币售价</th>
+                  <th align="center">原币种</th>
+                  <th align="center">原币售价</th>
+                  <th align="center">显示票价</th>
+                  <th align="center">显示税费</th>
+                  <th align="center">预定费用</th>
+                  <th align="center">显示燃油费</th>
+                  <th align="center">留学生特价</th>
+                  <th align="center">中转城市</th>
+                </tr>
+              </thead>
+              <tbody id="DataDivFare">
+                <tr class="text-c">
+                  <td id="tdFlighInfo" data-title="航班" class="tab_title"><a id="tdatdFlighInfo" href="#X">AA186</a></td>
+                  <td id="tdDataSource" data-title="来源">携程</td>
+                  <td id="tdDeptureDate" data-title="出发日期">2016-12-6</td>
+                  <td id="tdStopType" data-title="直飞/中转">中转</td>
+                  <td id="tdCarrierCode" data-title="航司代码">A600S</td>
+                  <td id="tdCabinClass" data-title="舱位等级">经济舱</td>
+                  <td id="tdRMBPrice" data-title="人民币售价">700元</td>
+                  <td id="tdBasePriceCode" data-title="原币种">美元</td>
+                  <td id="tdBasePrice" data-title="原币售价">100美元</td>
+                  <td id="tdShowPrice" data-title="显示票价">750元</td>
+                  <td id="tdShowTax" data-title="显示税费">780元</td>
+                  <td id="tdOrderPrice" data-title="预定费用">800元</td>
+                  <td id="tdShowFuleTax" data-title="显示燃油费">20元</td>
+                  <td id="tdLXSPrice" data-title="留学生特价">700元</td>
+                  <td id="tdStopCity" data-title="中转城市">芝加哥</td>
+                </tr>
+                <tr class="text-c">
+                  <td id="tdFlighInfo" data-title="航班" class="tab_title"><a id="tdatdFlighInfo" href="#X">AA186</a></td>
+                  <td id="tdDataSource" data-title="来源">携程</td>
+                  <td id="tdDeptureDate" data-title="出发日期">2016-12-6</td>
+                  <td id="tdStopType" data-title="直飞/中转">中转</td>
+                  <td id="tdCarrierCode" data-title="航司代码">A600S</td>
+                  <td id="tdCabinClass" data-title="舱位等级">经济舱</td>
+                  <td id="tdRMBPrice" data-title="人民币售价">700元</td>
+                  <td id="tdBasePriceCode" data-title="原币种">美元</td>
+                  <td id="tdBasePrice" data-title="原币售价">100美元</td>
+                  <td id="tdShowPrice" data-title="显示票价">750元</td>
+                  <td id="tdShowTax" data-title="显示税费">780元</td>
+                  <td id="tdOrderPrice" data-title="预定费用">800元</td>
+                  <td id="tdShowFuleTax" data-title="显示燃油费">20元</td>
+                  <td id="tdLXSPrice" data-title="留学生特价">700元</td>
+                  <td id="tdStopCity" data-title="中转城市">芝加哥</td>
+                </tr>
+                <tr class="text-c">
+                  <td id="tdFlighInfo" data-title="航班" class="tab_title"><a id="tdatdFlighInfo" href="#X">AA186</a></td>
+                  <td id="tdDataSource" data-title="来源">携程</td>
+                  <td id="tdDeptureDate" data-title="出发日期">2016-12-6</td>
+                  <td id="tdStopType" data-title="直飞/中转">中转</td>
+                  <td id="tdCarrierCode" data-title="航司代码">A600S</td>
+                  <td id="tdCabinClass" data-title="舱位等级">经济舱</td>
+                  <td id="tdRMBPrice" data-title="人民币售价">700元</td>
+                  <td id="tdBasePriceCode" data-title="原币种">美元</td>
+                  <td id="tdBasePrice" data-title="原币售价">100美元</td>
+                  <td id="tdShowPrice" data-title="显示票价">750元</td>
+                  <td id="tdShowTax" data-title="显示税费">780元</td>
+                  <td id="tdOrderPrice" data-title="预定费用">800元</td>
+                  <td id="tdShowFuleTax" data-title="显示燃油费">20元</td>
+                  <td id="tdLXSPrice" data-title="留学生特价">700元</td>
+                  <td id="tdStopCity" data-title="中转城市">芝加哥</td>
+                </tr>
+              </tbody>
+              <tbody>
+                  <tr class="nodata" style="" id="trnodata">
+                    <td class="text-c" colspan="17" id="tdnodata">没有搜索到信息，请重新输入查询条件！
+                    </td>
+                  </tr>
+              </tbody>
+            </table>
+            <div id="Pagination" class="msdn"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+  <script type="text/javascript" src="js/select_pop.js"></script>
+  <script type="text/javascript" src="js/left_menu.js"></script>
+  <script type="text/javascript" src="js/left_fold.js"></script>
+  <script type="text/javascript" src="js/priceline.js"></script>
+  <script type="text/javascript" src="js/jquery.linq.min.js"></script>
+  <script type="text/javascript">
+    // Firefox, Google Chrome, Opera, Safari, Internet Explorer from version 9
+        function OnInput (event) {
+          console.log(11);
+            alert ("The new content: " + event.target.value);
+        }
+    // Internet Explorer
+        function OnPropChanged (event) {
+            if (event.propertyName.toLowerCase () == "value") {
+                alert ("The new content: " + event.srcElement.value);
+                console.log(3333);
+            }
+        }
+    </script>
+</body>
+</html>

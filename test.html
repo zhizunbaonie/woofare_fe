@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="微行大数据管理系统">
+  <meta name="keywords" content="微行,大数据管理系统,航班,汇率,航段">
+  <link href="css/ui.min.css" rel="stylesheet" type="text/css">
+  <link href="css/commen.css" rel="stylesheet" type="text/css">
+  <link href="css/iconfont.css" rel="stylesheet" type="text/css">
+  <link href="css/skin.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <link href="css/cityquery.css" rel="stylesheet" type="text/css">
+  <link href="css/InterFlightModel.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="js/jquery/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js/d3.js"></script>
+  <title>微行大数据管理系统</title>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <style type="text/css">
+    .city_box{
+      margin:100px;
+    }
+    .city_input{
+      border:1px #666 solid;
+      height:30px;
+      line-height: 30px;
+      position: relative;
+    }
+    .city_list{
+      display: none;
+      clear: both;
+      overflow: hidden;
+      border:1px #666 solid;
+      margin-top: -1px;
+      width: 200px;
+    }
+    .city_list ul{
+      margin:0;
+      padding: 0;
+      list-style: none;
+    }
+    .city_list ul li{
+      border-bottom: 1px #ccc dashed;
+      line-height: 28px;
+    }
+    .show{
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="city_box">
+    <input type="text" value="" id="citys" class="city_input" />
+    <div class="city_list" id="citys_pop">
+      <ul>
+        <li>北京</li>
+        <li>上海</li>
+        <li>深圳</li>
+        <li>广州</li>
+        <li>香港</li>
+        <li>台北</li>
+      </ul>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $('document').ready(function(){
+      $('#citys').on('click',function(){
+        var poplayout = $('#citys_pop');
+        if(!poplayout.hasClass('show')){
+          poplayout.addClass('show');
+        }
+      });
+      var cityName = null;
+      $('#citys_pop li').click(function(){
+        var thisCityName = $(this).text();
+        cityName = thisCityName
+      });
+      console.log(cityName);
+    });
+  </script>
+
+</body>
+</html>

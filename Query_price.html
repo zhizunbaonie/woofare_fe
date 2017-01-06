@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="微行大数据管理系统">
+  <meta name="keywords" content="微行,大数据管理系统,航班,汇率,航段">
+  <link href="css/ui.min.css" rel="stylesheet" type="text/css">
+  <link href="css/commen.css" rel="stylesheet" type="text/css">
+  <link href="css/iconfont.css" rel="stylesheet" type="text/css">
+  <link href="css/skin.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <link href="css/cityquery.css" rel="stylesheet" type="text/css">
+  <link href="css/InterFlightModel.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="js/jquery/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js/d3.js"></script>
+  <title>微行大数据管理系统</title>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <header class="Hui-header cl">
+      <a class="Hui-logo l" title="微行大数据管理系统" href="/">微行大数据管理系统</a> <a class="Hui-logo-m l" href="/" title="微行大数据管理系统"></a><span class="微行大数据管理系统"></span>
+      <ul class="Hui-userbar">
+          <li>超级管理员</li>
+          <li class="dropDown"><a href="javascript:void(0);" class="dropDown_A"><span id="LoginName">demo3</span><i class="Hui-iconfont"></i></a>
+              <ul class="dropDown-menu radius box-shadow">
+                  <li style="display: none;"><a href="javascript:void(0);">个人信息</a></li>
+                  <li><a href="javascript:void(0);" id="btnUpdatePsd">修改密码</a></li>
+                  <li><a href="/ExitSys.aspx">退出</a></li>
+              </ul>
+          </li>
+      </ul>
+  </header>
+  <aside class="Hui-aside">
+    <div class="menu_dropdown bk_2">
+      <dl id="SMenu_M_FX_01_01" style="" class="TempList">
+          <dt id="SMenudt" class="selected">
+            <i class="Hui-iconfont" id="SMenusi"></i> <a id="SMenus" href="javascript:void(0)">实时数据分析</a><i class="Hui-iconfont menu_dropdown-arrow" id="SMenuei"></i>
+          </dt>
+          <dd id="TMenudd" style="display: block;">
+              <ul id="TMenuul">
+                  <li><a href="#" href="javascript:void(0)">航班查询</a></li>
+                  <li><a href="#" href="javascript:void(0)">汇率管理</a></li>
+                  <li><a href="#" href="javascript:void(0)">航段管理</a></li>
+                  <li><a href="#" href="javascript:void(0)">爬虫任务管理</a></li>
+              </ul>
+          </dd>
+      </dl>
+    </div>
+  </aside>
+  <div class="dislpayArrow">
+      <a class="pngfix" href="javascript:void(0);" onclick="displaynavbar(this)"></a>
+  </div>
+
+
+  <section class="Hui-article-box">
+    <div id="iframe_box" class="Hui-article">
+     <!--  <form method="post" id="form1"> -->
+        <nav class="breadcrumb">
+          <i class="Hui-iconfont"></i> 首页
+          <span class="c-gray en">&gt;</span> 实时数据分析
+          <span class="c-gray en">&gt;</span>航班查询
+        </nav>
+        <div class="pd-20 search_flight_box">
+          <div class="pd-5">
+            <span class="inquiry_li">
+              出发城市： <input type="text" id="txtDepartCity" name="txtDepartCity" style="color: rgb(0, 0, 0);" class="input-text" autocomplete="off">
+            </span>
+            <span class="inquiry_li">
+              到达城市： <input type="text" id="txtDestCity" name="txtDestCity" style="color: rgb(0, 0, 0);" class="input-text" autocomplete="off">
+            </span>
+            <span class="inquiry_li">
+              航班日期段：
+              <input type="text" id="txtDeptureDate" name="txtDeptureDate" class="input-text" value="2016-12-18">
+              至
+              <input type="text" id="txtArriveDate" name="txtArriveDate" class="input-text"  value="2016-12-18">
+            </span>
+
+            <span class="inquiry_li">
+              经停：
+              <input type="text" value="经停" style="color: rgb(0, 0, 0);" class="input-text" autocomplete="off" />
+            </span>
+          </div>
+          <div class="pd-5">
+            <!-- 停需期开始 -->
+            <span class="inquiry_li" style="padding-left:84px;">
+              <div class="g-down" style="position:relative;z-index:9999;">
+                <div class="target">停需期 <i class="g-ico g-ico-soliddrop"></i></div>
+                <div class="list">
+                  <ul class="airline tempclass" id="ul_FlightCarrier0">
+                    <li id="li_FlightCarrier0" style="" carriercode="HO">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="HO"><span id="sp_TCarrierName">吉祥航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier1" style="" carriercode="HX">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="HX"><span id="sp_TCarrierName">香港航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier2" style="" carriercode="FM">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="FM"><span id="sp_TCarrierName">上海航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier3" style="" carriercode="MF">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="MF"><span id="sp_TCarrierName">厦门航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier4" style="" carriercode="MU">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="MU"><span id="sp_TCarrierName">东方航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier5" style="" carriercode="KA">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="KA"><span id="sp_TCarrierName">港龙航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier6" style="" carriercode="CX">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="CX"><span id="sp_TCarrierName">国泰航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier7" style="" carriercode="9C">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="9C"><span id="sp_TCarrierName">春秋航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </span>
+            <!-- 停需期结束 -->
+            <span class="inquiry_li" style="margin-left:-7px;">
+              <span>舱位等级：</span>
+              <span class="select-box inline">
+                <select id="slt_CabinCode" class="select">
+                  <option value="Y">经济舱</option>
+                  <option value="C">公务舱</option>
+                  <option value="F">头等舱</option>
+                </select>
+              </span>
+            </span>
+
+            <span class="inquiry_li">
+                <em>显示维度：</em>
+                <span  class="show_dimension">
+                  <input type="radio" name="time_dimension" id="time_month" value="30"><label for="time_month">月</label>
+                </span>
+                <span  class="show_dimension">
+                  <input type="radio" name="time_dimension" id="time_week" value="7"><label for="time_week">周</label>
+                </span>
+                <span  class="show_dimension">
+                  <input type="radio" name="time_dimension" id="time_day" value="1"><label for="time_day">日</label>
+                </span>
+            </span>
+
+            <span class="inquiry_li  padding_l0">
+              <span name="btnSearch" id="btnSearch" class="btn btn-success radius  ml-10"><i class="Hui-iconfont"></i> 查询</span>
+            </span>
+          </div>
+          <div class="pd-5">
+            <!-- 航空公司开始 -->
+            <span class="inquiry_li" style="padding-left:84px;">
+              <div class="g-down">
+                <div class="target">航空公司 <i class="g-ico g-ico-soliddrop"></i></div>
+                <div class="list">
+                  <ul class="airline tempclass" id="ul_FlightCarrier0">
+                    <li id="li_FlightCarrier0" style="" carriercode="HO">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="HO"><span id="sp_TCarrierName">吉祥航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier1" style="" carriercode="HX">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="HX"><span id="sp_TCarrierName">香港航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier2" style="" carriercode="FM">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="FM"><span id="sp_TCarrierName">上海航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier3" style="" carriercode="MF">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="MF"><span id="sp_TCarrierName">厦门航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier4" style="" carriercode="MU">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="MU"><span id="sp_TCarrierName">东方航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier5" style="" carriercode="KA">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="KA"><span id="sp_TCarrierName">港龙航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier6" style="" carriercode="CX">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="CX"><span id="sp_TCarrierName">国泰航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                    <li id="li_FlightCarrier7" style="" carriercode="9C">
+                      <label class="fl width110">
+                          <input type="checkbox" class="inp_chk" id="chb_CarrierCode" name="carrier" value="9C"><span id="sp_TCarrierName">春秋航空</span></label>
+                      <span class="money" id="sp_TPrice"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </span>
+            <!-- 航空公司结束 -->
+          </div>
+        </div>
+
+        <!-- 查询结果图表展示开始 -->
+        <div id="show_Line_Chart"></div>
+        <p>
+        <button class="Refresh_chart">刷新数据</button>
+        </p>
+        <!-- 查询结果图表展示结束 -->
+      <!-- </form> -->
+    </div>
+  </section>
+  <script type="text/javascript">
+    $('document').ready(function(){
+      var dataset=[];//数据集
+      var lines=[]; //保存折线图对象
+      var xMarks=[];
+      var lineNames=[]; //保存系列名称
+      var lineColor=["#F00","#9c00ff","#0F0","#00ffea","#FF00EA","#1800ff","#2fa8e0","#00d8ff","#00991d","#bad82c","#fff000","#ff7200"];
+      var w=1200;
+      var h=500;
+      var padding=80;
+      var currentLineNum=0;
+
+      //用一个变量存储标题和副标题的高度，如果没有标题什么的，就为0
+      var head_height=padding;
+      var title="收支平衡统计图";
+      var subTitle="2013年1月 至 2013年6月";
+
+      //用一个变量计算底部的高度，如果不是多系列，就为0
+      var foot_height=padding;
+
+      //模拟数据
+      getData();
+
+      //判断是否多维数组，如果不是，则转为多维数组，这些处理是为了处理外部传递的参数设置的，现在数据标准，没什么用
+      if(!(dataset[0] instanceof Array))
+      {
+        var tempArr=[];
+        tempArr.push(dataset);
+        dataset=tempArr;
+      }
+
+      //保存数组长度，也就是系列的个数
+      currentLineNum=dataset.length;
+
+      //图例的预留位置
+      foot_height+=25;
+
+      //定义画布
+      var svg=d3.select("#show_Line_Chart")
+      .append("svg")
+      .attr("width",w)
+      .attr("height",h);
+
+      //添加背景
+      svg.append("g")
+      .append("rect")
+      .attr("x",0)
+      .attr("y",0)
+      .attr("width",w)
+      .attr("height",h)
+      .style("fill","#FFF")
+      .style("stroke-width",2)
+      .style("stroke","#F7F7F7");
+
+      //添加标题
+      if(title!="")
+      {
+        svg.append("g")
+        .append("text")
+        .text(title)
+        .attr("class","title")
+        .attr("x",w/2)
+        .attr("y",head_height);
+
+        head_height+=30;
+      }
+
+      //添加副标题
+      if(subTitle!="")
+      {
+        svg.append("g")
+        .append("text")
+        .text(subTitle)
+        .attr("class","subTitle")
+        .attr("x",w/2)
+        .attr("y",head_height);
+
+        head_height+=20;
+      }
+
+      maxdata=getMaxdata(dataset);
+
+      //横坐标轴比例尺
+      var xScale = d3.scale.linear()
+      .domain([0,dataset[0].length-1])
+      .range([padding,w-padding]);
+
+      //纵坐标轴比例尺
+      var yScale = d3.scale.linear()
+      .domain([0,maxdata])
+      .range([h-foot_height,head_height]);
+
+      //定义横轴网格线
+      var xInner = d3.svg.axis()
+      .scale(xScale)
+      .tickSize(-(h-head_height-foot_height),0,0)
+      .tickFormat("")
+      .orient("bottom")
+      .ticks(dataset[0].length);
+
+      //添加横轴网格线
+      var xInnerBar=svg.append("g")
+      .attr("class","inner_line")
+      .attr("transform", "translate(0," + (h - padding) + ")")
+      .call(xInner);
+
+      //定义纵轴网格线
+      var yInner = d3.svg.axis()
+      .scale(yScale)
+      .tickSize(-(w-padding*2),0,0)
+      .tickFormat("")
+      .orient("left")
+      .ticks(10);
+
+      //添加纵轴网格线
+      var yInnerBar=svg.append("g")
+      .attr("class", "inner_line")
+      .attr("transform", "translate("+padding+",0)")
+      .call(yInner);
+
+      //定义横轴
+      var xAxis = d3.svg.axis()
+      .scale(xScale)
+      .orient("bottom")
+      .ticks(dataset[0].length);
+
+      //添加横坐标轴
+      var xBar=svg.append("g")
+      .attr("class","axis")
+      .attr("transform", "translate(0," + (h - foot_height) + ")")
+      .call(xAxis);
+
+      if(xMarks.length==1){
+        var xBar =d3.select(".axis").append("text")
+        .attr("y","9")
+        .attr("x","0")
+        .attr("dy",".71em")
+        .text(xMarks[0]);
+      }
+
+      //通过编号获取对应的横轴标签
+      xBar.selectAll("text")
+      .text(function(d){return xMarks[d];});
+
+      //定义纵轴
+      var yAxis = d3.svg.axis()
+      .scale(yScale)
+      .orient("left")
+      .ticks(10);
+
+      //添加纵轴
+      var yBar=svg.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate("+padding+",0)")
+      .call(yAxis);
+
+      //添加图例
+      var legend=svg.append("g");
+      addLegend();
+
+      //添加折线
+      lines=[];
+      for(i=0;i<currentLineNum;i++)
+      {
+        var newLine=new CrystalLineObject();
+        newLine.init(i);
+        lines.push(newLine);
+      }
+
+      //重新作图
+      function drawChart()
+      {
+        var _duration=1000;
+
+        getData();
+
+        addLegend();
+
+        //设置线条动画起始位置
+        var lineObject=new CrystalLineObject();
+
+        for(i=0;i<dataset.length;i++)
+        {
+          if(i<currentLineNum)
+          {
+            //对已有的线条做动画
+            lineObject=lines[i];
+            lineObject.movieBegin(i);
+          }
+          else
+          {
+            //如果现有线条不够，就加上一些
+            var newLine=new CrystalLineObject();
+            newLine.init(i);
+            lines.push(newLine);
+          }
+        }
+
+        //删除多余的线条，如果有的话
+        if(dataset.length<currentLineNum)
+        {
+          for(i=dataset.length;i<currentLineNum;i++)
+          {
+            lineObject=lines[i];
+            lineObject.remove();
+          }
+          lines.splice(dataset.length,currentLineNum-dataset.length);
+        }
+
+        maxdata=getMaxdata(dataset);
+        newLength=dataset[0].length;
+
+        //横轴数据动画
+        xScale.domain([0,newLength-1]);
+        xAxis.scale(xScale).ticks(newLength);
+        xBar.transition().duration(_duration).call(xAxis);
+        xBar.selectAll("text").text(function(d){return xMarks[d];});
+        xInner.scale(xScale).ticks(newLength);
+        xInnerBar.transition().duration(_duration).call(xInner);
+
+        //纵轴数据动画
+        yScale.domain([0,maxdata]);
+        yBar.transition().duration(_duration).call(yAxis);
+        yInnerBar.transition().duration(_duration).call(yInner);
+
+        //开始线条动画
+        for(i=0;i<lines.length;i++)
+        {
+          lineObject=lines[i];
+          lineObject.reDraw(i,_duration);
+        }
+
+        currentLineNum=dataset.length;
+        dataLength=newLength;
+      }
+
+
+      //定义折线类
+      function CrystalLineObject()
+      {
+        this.group=null;
+        this.path=null;
+        this.oldData=[];
+
+        this.init=function(id)
+        {
+          var arr=dataset[id];
+          this.group=svg.append("g");
+
+          var line = d3.svg.line()
+          .x(function(d,i){return xScale(i);})
+          .y(function(d){return yScale(d);});
+
+          //添加折线
+          this.path=this.group.append("path")
+          .attr("d",line(arr))
+          .style("fill","none")
+          .style("stroke-width",1)
+          .style("stroke",lineColor[id])
+          .style("stroke-opacity",0.9);
+
+          //添加系列的小圆点
+          this.group.selectAll("circle")
+          .data(arr)
+          .enter()
+          .append("circle")
+          .attr("cx", function(d,i) {
+            return xScale(i);
+          })
+          .attr("cy", function(d) {
+            return yScale(d);
+          })
+          .attr("r",5)
+          .attr("fill",lineColor[id])
+          .on("mouseover",function(d,i){
+            /*console.log(d3.select(this).attr('cx'));//圆点的cx值
+            console.log(d3.select(this).attr('cy'));//圆点的cy值
+            //console.log(d3.select(this).data());//圆点元素的数组
+            console.log(d3.select(this).data()[0]);//圆点元素的x数组值
+            console.log(xMarks[i]);//圆点元素的y数组值*/
+            //定义弹出层坐标数据提示
+            var thiscolor = d3.select(this).attr("fill");
+            for(var c=0;c<lineColor.length;c++){
+              if(lineColor[c] == thiscolor){
+                var current_c = c;
+              }
+            }
+            var thisTop = $(this).offset().top+3;
+            var thisRight = $('body').width()-$(this).offset().left;
+            if(thisRight<180){
+              var thisLeft = $(this).offset().left-217;
+            }else{
+              var thisLeft = $(this).offset().left+3;
+            }
+            var popDivLayout = "<div class='pop_tip' style='top:"+thisTop+"px;left:" +thisLeft+"px;'>航司：" +lineNames[current_c]+"<br/>数据："+d3.select(this).data()[0]+"<br/>时间：" +xMarks[i]+"</div>";
+            $("body").prepend(popDivLayout);
+          })
+          .on("mouseout",function(d,i){
+              $(document).find('.pop_tip').remove();
+          });
+          this.oldData=arr;
+        };
+
+        //动画初始化方法
+        this.movieBegin=function(id)
+        {
+          var arr=dataset[i];
+          //补足/删除路径
+          var olddata=this.oldData;
+          var line= d3.svg.line()
+          .x(function(d,i){if(i>=olddata.length) return w-padding; else return xScale(i);})
+          .y(function(d,i){if(i>=olddata.length) return h-foot_height; else return yScale(olddata[i]);});
+
+          //路径初始化
+          this.path.attr("d",line(arr));
+
+          //截断旧数据
+          var tempData=olddata.slice(0,arr.length);
+          var circle=this.group.selectAll("circle").data(tempData);
+
+          //删除多余的圆点
+          circle.exit().remove();
+
+          //圆点初始化，添加圆点,多出来的到右侧底部
+          this.group.selectAll("circle")
+          .data(arr)
+          .enter()
+          .append("circle")
+          .attr("cx", function(d,i){
+          if(i>=olddata.length) return w-padding; else return xScale(i);
+          })
+          .attr("cy",function(d,i){
+            if(i>=olddata.length) return h-foot_height; else return yScale(d);
+          })
+          .attr("r",5)
+          .attr("fill",lineColor[id]);
+
+          this.oldData=arr;
+        };
+
+        //重绘加动画效果
+        this.reDraw=function(id,_duration)
+        {
+          var arr=dataset[i];
+          var line = d3.svg.line()
+          .x(function(d,i){return xScale(i);})
+          .y(function(d){return yScale(d);});
+
+          //路径动画
+          this.path.transition().duration(_duration).attr("d",line(arr));
+
+          //圆点动画
+          this.group.selectAll("circle")
+          .transition()
+          .duration(_duration)
+          .attr("cx", function(d,i) {
+            return xScale(i);
+          })
+          .attr("cy", function(d) {
+            return yScale(d);
+          })
+        };
+
+        //从画布删除折线
+        this.remove=function()
+        {
+          this.group.remove();
+        };
+      }
+
+      //添加图例
+      function addLegend()
+      {
+        var textGroup=legend.selectAll("text")
+        .data(lineNames);
+
+        textGroup.exit().remove();
+
+        legend.selectAll("text")
+        .data(lineNames)
+        .enter()
+        .append("text")
+        .text(function(d){return d;})
+        .attr("class","legend")
+        .attr("x", function(d,i) {return i*100+40;})
+        .attr("y",0)
+        .attr("fill",function(d,i){ return lineColor[i];});
+
+        var rectGroup=legend.selectAll("rect")
+        .data(lineNames);
+
+        rectGroup.exit().remove();
+
+        legend.selectAll("rect")
+        .data(lineNames)
+        .enter()
+        .append("rect")
+        .attr("x", function(d,i) {return i*100+20;})
+        .attr("y",-10)
+        .attr("width",12)
+        .attr("height",12)
+        .attr("fill",function(d,i){ return lineColor[i];});
+
+        legend.attr("transform","translate("+((w-lineNames.length*100)/2)+","+(h-10)+")");
+      }
+
+      //产生随机数据
+      function getData()
+      {
+        var lineNum=Math.round(Math.random()*10)%3+8;
+        var dataNum=Math.round(Math.round(Math.random()*10))+5;
+        var time="20170505";
+        oldData=dataset;
+        dataset=[];
+        xMarks=[];//日期数组
+        lineNames=[];
+
+        for(i=0;i<dataNum;i++)
+        {
+          xMarks.push(time+i);
+        }
+        for(i=0;i<lineNum;i++)
+        {
+          var tempArr=[];
+          for(j=0;j<dataNum;j++)
+          {
+            tempArr.push(Math.round(Math.random()*h));
+          }
+          dataset.push(tempArr);
+          lineNames.push("系列"+i);
+        }
+      }
+
+      //取得多维数组最大值
+      function getMaxdata(arr)
+      {
+        maxdata=0;
+        for(i=0;i<arr.length;i++)
+        {
+          maxdata=d3.max([maxdata,d3.max(arr[i])]);
+        }
+        return maxdata;
+      }
+      $('.Refresh_chart').click('.Refresh_chart',function(){
+        drawChart();
+      });
+    });
+  </script>
+
+</body>
+</html>
